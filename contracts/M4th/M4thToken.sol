@@ -7,7 +7,7 @@ import "./Ownable.sol";
 
 
 contract M4thToken is ERC20Pausable, Ownable {
-    string private _m4c_name = "Medical4th";
+    string private _m4c_name = "Medical 4th Chain";
     string private _m4c_symbol = "M4th";
     uint256 private _m4c_decimals = 18;
     uint256 private INITIAL_SUPPLY = 4000000000 * (10**_m4c_decimals); //40 억개

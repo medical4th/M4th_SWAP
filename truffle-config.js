@@ -24,6 +24,14 @@
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
 
+const HDWalletProvider = require("@truffle/hdwallet-provider");
+const infuraKey = "";
+const privateKey = "";
+
+// rinkeby - 0xefd50E16a7E7150AF14bAFB957508A6a4c2c5Ca4
+// ropsten - 0x215e168daa594F0C0aEcB208055B567aDdB8810f
+// mainnet - 0x32823118381e585ABf4B406F47BF223C0A38522f
+
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -47,6 +55,44 @@ module.exports = {
       port: 7545, // Standard Ethereum port (default: none)
       network_id: "*", // Any network (default: none)
       gas: 4600000,
+    },
+
+    rinkeby: {
+      provider: () =>
+        new HDWalletProvider(
+          privateKey,
+          `https://rinkeby.infura.io/v3/` + infuraKey
+        ),
+      network_id: 4,
+      gas: 5500000, // Ropsten has a lower block limit than mainnet
+      confirmations: 2, // # of confs to wait between deployments. (default: 0)
+      timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+    },
+    ropsten: {
+      provider: () =>
+        new HDWalletProvider(
+          privateKey,
+          `https://ropsten.infura.io/v3/` + infuraKey
+        ),
+      network_id: 3, // Ropsten's id
+      gas: 5500000, // Ropsten has a lower block limit than mainnet
+      confirmations: 2, // # of confs to wait between deployments. (default: 0)
+      timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+    },
+    mainnet: {
+      provider: () =>
+        new HDWalletProvider(
+          privateKey,
+          `https://mainnet.infura.io/v3/` + infuraKey
+        ),
+      network_id: 1, // Ropsten's id
+      gas: 5500000, // Ropsten has a lower block limit than mainnet
+      confirmations: 2, // # of confs to wait between deployments. (default: 0)
+      timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+      gasPrice: 15000000000,  //15gwei
     },
     // Another network with more advanced options...
     // advanced: {
@@ -85,13 +131,14 @@ module.exports = {
     solc: {
       version: "0.6.2", // Fetch exact version from solc-bin (default: truffle's version)  0.5.1
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
-      settings: {          // See the solidity docs for advice about optimization and evmVersion
+      settings: {
+        // See the solidity docs for advice about optimization and evmVersion
         optimizer: {
           enabled: false,
-          runs: 200
+          runs: 200,
         },
-      //  evmVersion: "byzantium"
-      }
+        //  evmVersion: "byzantium"
+      },
     },
   },
-}
+};
